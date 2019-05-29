@@ -20,12 +20,15 @@ def pktEncoder(pktSeqNo, message) :
 message = "Ping"
 
 for i in range(10) :
-    pktSeqNo = i
+    try :
 
-    sock.sendto(pktEncoder(pktSeqNo,message), (server_ip, server_port))
-    print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))
+        pktSeqNo = i
 
-    data, addr = sock.recvfrom(1024)
-    a,b = pktDecoder(data)
-    print ("Client: recv \"" + b + "\", pktNo : " + str(a))
-    
+        sock.sendto(pktEncoder(pktSeqNo,message), (server_ip, server_port))
+        print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))
+
+        data, addr = sock.recvfrom(1024)
+        a,b = pktDecoder(data)
+        print ("Client: recv \"" + b + "\", pktNo : " + str(a))
+    except socket.timeout :
+        pass
