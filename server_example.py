@@ -19,7 +19,7 @@ def pktDecoder(data) :
     return pktSeqNo, message
 
 def pktEncoder(pktSeqNo, message) :
-    pkt = pktSeqNo + DELIMITER + message
+    pkt = str(pktSeqNo) + DELIMITER + message
     return pkt.encode('utf-8')
 
 def pktProcessing(data, addr) :
