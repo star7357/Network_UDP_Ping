@@ -26,8 +26,8 @@ def pktProcessing(data, addr) :
     dict_recvPkts = dict()
     clientIP, clientPort = addr
     pktSeqNo, message = pktDecoder(data)
-    print("Message Delivered. Message : %s, PktNo : %s" % (message, str(pktSeqNo)))
     delay = 2 * random.random()
+    print("Message Delivered. Message : %s, PktNo : %s, (Delay : %.4f)" % (message, str(pktSeqNo), delay))
 
     # Packet from (clientIP,clientPort) has been arrived first time
     # Save CACK for each (IP,Port) 
