@@ -26,6 +26,7 @@ def pktProcessing(data, addr) :
     dict_recvPkts = dict()
     clientIP, clientPort = addr
     pktSeqNo, message = pktDecoder(data)
+    print("Message Delivered. Message : %s, PktNo : %s" % (message, str(pktSeqNo)))
     delay = 2 * random.random()
 
     # Packet from (clientIP,clientPort) has been arrived first time
@@ -34,6 +35,7 @@ def pktProcessing(data, addr) :
         dict_recvPkts[(clientIP, clientPort)] = pktSeqNo
         time.sleep(delay)
         sock.sendto(pktEncoder(pktSeqNo,message),addr)
+        print("Pkt sent.")
     else : # Packet from (clientIP, clientPort) has been arrived before at least once
         # SeqNo in packet is not bigger than CACK, it means the received packt is out-of-order
         if pktSeqNo <= dict_recvPkts[(clientIP, clientPort)] :
@@ -43,6 +45,7 @@ def pktProcessing(data, addr) :
             dict_recvPkts[(clientIP,clientPort)] = pktSeqNo
             time.sleep(delay)
             sock.sendto(pktEncoder(pktSeqNo,message), addr)
+            print("Pkt sent.")
 
 while True :
     data,addr = sock.recvfrom(1024)
