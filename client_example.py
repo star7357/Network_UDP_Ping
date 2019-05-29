@@ -7,7 +7,7 @@ server_ip = 'nsl2.cau.ac.kr'
 server_port = 34367
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+sock.settimeout(1)
 def pktDecoder(data) :
     rawData = data.decode('utf-8')
     pktSeqNo, message = rawData.split(DELIMITER)
@@ -28,3 +28,4 @@ for i in range(10) :
     data, addr = sock.recvfrom(1024)
     a,b = pktDecoder(data)
     print ("Client: recv \"" + b + "\", pktNo : " + str(a))
+    
