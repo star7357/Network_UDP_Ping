@@ -21,8 +21,7 @@ message = "Ping"
 
 for i in range(10) :
     try :
-
-        pktSeqNo = i
+        pktSeqNo = random.randrange(i)
 
         sock.sendto(pktEncoder(pktSeqNo,message), (server_ip, server_port))
         print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))

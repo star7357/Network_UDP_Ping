@@ -50,7 +50,6 @@ def pktProcessing(data, addr) :
 while True :
     data,addr = sock.recvfrom(1024)
     if random.randrange(0,100) < 20 :
-        print("Packet loss.")
         continue
     else :
         start_new_thread(pktProcessing, (data,addr,))
