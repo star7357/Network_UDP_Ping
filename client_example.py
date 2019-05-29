@@ -1,5 +1,6 @@
 # client_skel.py
 import socket
+import random
 
 DELIMITER = '\n'
 
