@@ -4,6 +4,7 @@ import socket
 server_ip = "127.0.0.1"
 server_port = 9000
 
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 message = "Ping"
