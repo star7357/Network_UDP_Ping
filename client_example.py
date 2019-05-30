@@ -36,23 +36,25 @@ sock.settimeout(1)
 for i in range(10) :
     try :
         pktSeqNo = str(i)
-#       pktSeqNo = random.randrange(0, 9)
+
         startTime = now()
         sock.sendto(pktEncoder(pktSeqNo,message), (serverIP, serverPort))
-#        print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))
+        print ("\n%s %s sent" % (message, pktSeqNo))
         sentPkt += 1
 
+        # Waiting for packet response from the server with the same sequence number as pktSeqNo for 'timeout' time
         while True :
             data, addr = sock.recvfrom(1024)
             recvPktSeqNo, recvMessage = pktDecoder(data)
             print("Received Packet : (%s,%s)" % (recvPktSeqNo, recvMessage))
-
-            if recvPktSeqNo == pktSeqNo :
+            
+            # Check if the packet received was expected one
+            if recvPktSeqNo == pktSeqNo : # If so, calculate the RTT
                 endTime = now()
                 RTT = endTime - startTime
-                print("Packet (%s,%s) has been received successfully. RTT : %dms" % (recvPktSeqNo, recvMessage, RTT))
+                print("%s %s reply received from %s : RTT = %d ms" % (recvMessage, recvPktSeqNo, addr[0], RTT))
                 break
-            else :
+            else : # If not (If the response packet was not expected one (eg. out-of-order)), just ignore it and wait for 'timeout' time
                 continue
 
 #        a,b = pktDecoder(data)
@@ -60,5 +62,4 @@ for i in range(10) :
  #       print ("Client: recv \"" + b + "\", pktNo : " + str(a))
     except socket.timeout :
         print("Time out!!!!")
-
-        pass
+        lostPkt += 1
