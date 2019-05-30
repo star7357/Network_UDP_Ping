@@ -26,7 +26,7 @@ def pingTestReport() :
     print("Ping Sent : %d" % sentPing)
     print("Ping Received : %d" % recvPing)
     print("Ping Lost : %d" % lostPing)
-    print("Lost Ratio : %.2f" % lostRatio)
+    print("Lost Ratio : %.2f" % round(lostRatio, 2))
     print("minRTT : %d ms, maxRTT : %d ms, avgRTT : %d ms\n" % (minRTT, maxRTT, avgRTT))
 
 timeoutInterval = 1000
@@ -41,9 +41,10 @@ avgRTT = 0.0
 message = "PING"
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.settimeout(timeoutInterval / 1000)
+
 
 for i in range(10) :
+    sock.settimeout(timeoutInterval / 1000)
     try :
         pktSeqNo = str(i)
 
@@ -70,7 +71,10 @@ for i in range(10) :
 
                 print("%s %s reply received from %s : RTT = %d ms" % (recvMessage, recvPktSeqNo, addr[0], RTT))
                 break
-            else : # If not (If the response packet was not expected one (eg. out-of-order)), just ignore it and wait for 'timeout' time
+            else : # Not expected packet received. Ignore the packet by substracting the elapsed time from default timeoutInterval and wait next packet
+                elapsedTime = now() - startTime
+                remainTime = timeoutInterval - elapsedTime
+                sock.settimeout(remainTime / 1000)
                 continue
 
     except socket.timeout :
