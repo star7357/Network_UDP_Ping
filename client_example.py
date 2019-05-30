@@ -29,7 +29,7 @@ def pingTestReport() :
     print("Lost Ratio : %.2f" % round(lostRatio, 2))
     print("minRTT : %d ms, maxRTT : %d ms, avgRTT : %d ms\n" % (minRTT, maxRTT, avgRTT))
 
-timeoutInterval = 1000
+timeoutInterval = 5000
 sentPing = 0
 recvPing = 0
 lostPing = 0
@@ -52,6 +52,7 @@ for i in range(10) :
         sock.sendto(pktEncoder(pktSeqNo,message), (serverIP, serverPort))
         print ("\n%s %s sent" % (message, pktSeqNo))
         sentPing += 1
+        sock.settimeout(timeoutInterval / 1000)
 
         # Waiting for packet response from the server with the same sequence number as pktSeqNo for 'timeout' time
         while True :
@@ -81,5 +82,7 @@ for i in range(10) :
         print("Time out!!!! %dms elpased!!!" % (now() - startTime))
         lostPing += 1
         lostRatio = lostPing / sentPing
+    
+
 
 pingTestReport()
