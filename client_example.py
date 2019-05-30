@@ -21,17 +21,27 @@ def pktEncoder(pktSeqNo, message) :
     pkt = str(pktSeqNo) + DELIMITER + message
     return pkt.encode('utf-8')
 
-sentPkt = 0
-recvPkt = 0
-lostPkt = 0
+def pingTestReport() :
+    print("[ 10 Ping Packets Result ]\n")
+    print("Ping Sent : %d" % sentPing)
+    print("Ping Received : %d" % recvPing)
+    print("Ping Lost : %d" % lostPing)
+    print("Lost Ratio : %d" % lostRatio)
+    print("min RTT : %d ms, max RTT : %d ms, avg RTT : %d ms\n" % (minRTT, maxRTT, avgRTT))
+
+timeoutInterval = 1000
+sentPing = 0
+recvPing = 0
+lostPing = 0
 lostRatio = 0.0
-minRTT = 0
-maxRtt = 0
-avgRtt = 0.0
+minRTT = 2 * timeoutInterval
+maxRTT = 0
+sumRTT = 0
+avgRTT = 0.0
 message = "PING"
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.settimeout(1)
+sock.settimeout(timeoutInterval / 1000)
 
 for i in range(10) :
     try :
@@ -40,7 +50,7 @@ for i in range(10) :
         startTime = now()
         sock.sendto(pktEncoder(pktSeqNo,message), (serverIP, serverPort))
         print ("\n%s %s sent" % (message, pktSeqNo))
-        sentPkt += 1
+        sentPing += 1
 
         # Waiting for packet response from the server with the same sequence number as pktSeqNo for 'timeout' time
         while True :
@@ -52,14 +62,20 @@ for i in range(10) :
             if recvPktSeqNo == pktSeqNo : # If so, calculate the RTT
                 endTime = now()
                 RTT = endTime - startTime
+                recvPing += 1
+                sumRTT += RTT
+                minRTT = min(RTT,minRTT)
+                maxRTT = max(RTT,maxRTT)
+                avgRTT = sumRTT / recvPing
+
                 print("%s %s reply received from %s : RTT = %d ms" % (recvMessage, recvPktSeqNo, addr[0], RTT))
                 break
             else : # If not (If the response packet was not expected one (eg. out-of-order)), just ignore it and wait for 'timeout' time
                 continue
 
-#        a,b = pktDecoder(data)
-
- #       print ("Client: recv \"" + b + "\", pktNo : " + str(a))
     except socket.timeout :
         print("Time out!!!!")
-        lostPkt += 1
+        lostPing += 1
+        lostRatio = lostPing / sentPing
+
+pingTestReport()
