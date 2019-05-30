@@ -45,6 +45,7 @@ for i in range(10) :
         while True :
             data, addr = sock.recvfrom(1024)
             recvPktSeqNo, recvMessage = pktDecoder(data)
+            print("Received Packet : (%s,%s)" % (recvPktSeqNo, recvMessage))
 
             if recvPktSeqNo == pktSeqNo :
                 endTime = now()
