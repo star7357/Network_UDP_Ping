@@ -60,7 +60,7 @@ print("The UDP Ping Server opened. <%s:%s>\n" % (str(serverIP),str(serverPort)))
 while True :
     data,addr = sock.recvfrom(1024)
     if random.randrange(0,100) < 20 :
-        print("Packet from <%d:%d> has been lost." % addr)
+        print("Packet from <%s:%d> has been lost." % addr)
         continue
     else :
         start_new_thread(pktProcessing, (data,addr,))
