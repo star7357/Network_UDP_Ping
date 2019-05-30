@@ -17,6 +17,14 @@ serverPort = 34367
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((serverIP, serverPort))
 
+# Signal handler for input'Ctrl + C'
+def signal_handler(signal, frame): 
+    print('Bye bye~')
+    sock.close()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+
 def pktDecoder(data) :
     rawData = data.decode('utf-8')
     pktSeqNo, message = rawData.split(DELIMITER)
