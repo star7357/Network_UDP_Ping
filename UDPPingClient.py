@@ -42,6 +42,7 @@ def pktEncoder(pktSeqNo, message) :
     return pkt.encode('utf-8')
 
 def pingTestReport() :
+    lostRatio = lostPing / sentPing
     print("\n[ 10 Ping Packets Result ]\n")
     print("Ping Sent : %d" % sentPing)
     print("Ping Received : %d" % recvPing)
@@ -138,8 +139,5 @@ for i in range(10) :
     except socket.timeout :
         print("PING %s timeout!" % pktSeqNo)
         lostPing += 1
-        lostRatio = lostPing / sentPing
-    
-
 
 pingTestReport()
