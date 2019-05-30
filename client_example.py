@@ -27,7 +27,7 @@ def pingTestReport() :
     print("Ping Received : %d" % recvPing)
     print("Ping Lost : %d" % lostPing)
     print("Lost Ratio : %d" % lostRatio)
-    print("min RTT : %d ms, max RTT : %d ms, avg RTT : %d ms\n" % (minRTT, maxRTT, avgRTT))
+    print("minRTT : %d ms, maxRTT : %d ms, avgRTT : %d ms\n" % (minRTT, maxRTT, avgRTT))
 
 timeoutInterval = 1000
 sentPing = 0
@@ -76,6 +76,6 @@ for i in range(10) :
     except socket.timeout :
         print("Time out!!!!")
         lostPing += 1
-        lostRatio = lostPing / sentPing
+        lostRatio = float(lostPing) / float(sentPing)
 
 pingTestReport()
