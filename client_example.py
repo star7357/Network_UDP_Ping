@@ -11,8 +11,6 @@ serverIP = 'nsl2.cau.ac.kr'
 serverPort = 34367
 
 now = lambda: int(round(time.time() * 1000))
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.settimeout(1)
 
 def pktDecoder(data) :
     rawData = data.decode('utf-8')
@@ -23,7 +21,6 @@ def pktEncoder(pktSeqNo, message) :
     pkt = str(pktSeqNo) + DELIMITER + message
     return pkt.encode('utf-8')
 
-message = "PING"
 sentPkt = 0
 recvPkt = 0
 lostPkt = 0
@@ -31,15 +28,18 @@ lostRatio = 0.0
 minRTT = 0
 maxRtt = 0
 avgRtt = 0.0
+message = "PING"
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.settimeout(1)
 
 for i in range(10) :
     try :
-        pktSeqNo = i
+        pktSeqNo = str(i)
 #       pktSeqNo = random.randrange(0, 9)
-
         startTime = now()
         sock.sendto(pktEncoder(pktSeqNo,message), (serverIP, serverPort))
-        print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))
+#        print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))
         sentPkt += 1
 
         while True :
