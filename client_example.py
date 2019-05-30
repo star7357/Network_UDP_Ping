@@ -51,8 +51,7 @@ for i in range(10) :
                 RTT = endTime - startTime
                 print("Packet (%s,%s) has been received successfully. RTT : %dms" % (recvPktSeqNo, recvMessage, RTT))
             else :
-                print("Packet has been received out of order.")
-                raise socket.timeout
+                continue
 
 #        a,b = pktDecoder(data)
 
