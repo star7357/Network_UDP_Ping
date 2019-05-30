@@ -58,7 +58,7 @@ def IPValidation(IPAddr) :
     return True
 
 def portValidation(portNumber) :
-    if portNumber.isdecimal == True and int(portNumber) >= 0 and int(portNumber) <= 65535 :
+    if portNumber.isdecimal() == True and int(portNumber) >= 0 and int(portNumber) <= 65535 :
         return True
     else :
         return False
