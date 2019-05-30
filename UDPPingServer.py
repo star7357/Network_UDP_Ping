@@ -48,7 +48,7 @@ def pktProcessing(data, addr) :
 #       print("dic_recevPkt[(%s,%s)] is updated to %s" % (str(clientIP), str(clientPort), pktSeqNo))
         time.sleep(delay)
         sock.sendto(pktEncoder(pktSeqNo,message),addr)
-        print("Pkt (%s,%s) sent successfully to <%s,%s>" % (pktSeqNo,message,clientIP,clientPort))
+        print("Pkt (%s,%s) sent successfully to <%s:%s>" % (pktSeqNo,message,clientIP,clientPort))
     else : # Packet from (clientIP, clientPort) has been arrived before at least once
         # SeqNo in packet is not bigger than CACK, it means the received packt is out-of-order
         if pktSeqNo <= dict_recvPkts[(clientIP, clientPort)] :
@@ -60,7 +60,7 @@ def pktProcessing(data, addr) :
             dict_recvPkts[(clientIP,clientPort)] = pktSeqNo
             time.sleep(delay)
             sock.sendto(pktEncoder(pktSeqNo,message), addr)
-        print("Pkt (%s,%s) sent successfully to <%s,%s>" % (pktSeqNo,message,str(clientIP),str(clientPort)))
+        print("Pkt (%s,%s) sent successfully to <%s:%s>" % (pktSeqNo,message,str(clientIP),str(clientPort)))
  
 
 print("\nThe UDP Ping Server opened. <%s:%s>\n" % (str(serverIP),str(serverPort)))

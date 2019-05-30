@@ -10,7 +10,7 @@ import time
 
 DELIMITER = '\n'
 
-serverIP = '127.0.0.1'
+serverIP = 'nsl2.cau.ac.kr'
 serverPort = 34367
 timeoutInterval = 1000
 
