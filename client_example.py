@@ -44,13 +44,19 @@ for i in range(10) :
 
         while True :
             data, addr = sock.recvfrom(1024)
-            endTime = now()
-            RpktSeqNo, Rmessage = pktDecoder(data)
+            recvPktSeqNo, recvMessage = pktDecoder(data)
 
-        rtt = endTime - startTime
+            if recvPktSeqNo == pktSeqNo :
+                endTime = now()
+                RTT = endTime - startTime
+                print("Packet (%s,%s) has been received successfully. RTT : %dms" % (recvPktSeqNo, recvMessage, RTT))
+            else :
+                print("Packet has been received out of order.")
+                raise socket.timeout
 
-        a,b = pktDecoder(data)
-        print ("Client: recv \"" + b + "\", pktNo : " + str(a))
+#        a,b = pktDecoder(data)
+
+ #       print ("Client: recv \"" + b + "\", pktNo : " + str(a))
     except socket.timeout :
         print("Time out!!!!")
 
