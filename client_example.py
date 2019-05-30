@@ -97,7 +97,7 @@ for opt, arg in opts :
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 signal.signal(signal.SIGINT, signal_handler)
-print("Ping test to <%s:%s>, Timeout time : %d" % (ServerIP, serverPort, timeoutInterval))
+print("Ping test to <%s:%s>, Timeout time : %d" % (serverIP, serverPort, timeoutInterval))
 
 for i in range(10) :
     try :
