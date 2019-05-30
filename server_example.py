@@ -37,18 +37,18 @@ def pktProcessing(data, addr) :
     if addr not in dict_recvPkts :
         print("Packet has been received from <%s:%s> initially." % (clientIP, clientPort))
         dict_recvPkts[(clientIP, clientPort)] = pktSeqNo
-#        print("dic_recevPkt[(%s,%s)] is updated to %s" % (str(clientIP), str(clientPort), pktSeqNo))
+#       print("dic_recevPkt[(%s,%s)] is updated to %s" % (str(clientIP), str(clientPort), pktSeqNo))
         time.sleep(delay)
         sock.sendto(pktEncoder(pktSeqNo,message),addr)
         print("Pkt (%s,%s) sent successfully to <%s,%s>\n" % (pktSeqNo,message,clientIP,clientPort))
     else : # Packet from (clientIP, clientPort) has been arrived before at least once
         # SeqNo in packet is not bigger than CACK, it means the received packt is out-of-order
         if pktSeqNo <= dict_recvPkts[(clientIP, clientPort)] :
-#            print("Because the pktSeqNo = %s is smaller than most recently sent packet's number = %d from <%s:%s>, " % (pktSeqNo, dict_recvPkts[(clientIP,clientPort)], str(clientIP),str(clientPort)), end = ' ')
+#           print("Because the pktSeqNo = %s is smaller than most recently sent packet's number = %d from <%s:%s>, " % (pktSeqNo, dict_recvPkts[(clientIP,clientPort)], str(clientIP),str(clientPort)), end = ' ')
             print("The packet received is out-of-order.\n")
             return 
         else : # The packet from (IP,Port) has been received before, and the packet is in order
-            print("The packet from <%s:%s> has been received before, and the packet with pktSeqno = %s is in order." % (str(clientIP), str(clientPort), pktSeqNo))
+#           print("The packet from <%s:%s> has been received before, and the packet with pktSeqno = %s is in order." % (str(clientIP), str(clientPort), pktSeqNo))
             dict_recvPkts[(clientIP,clientPort)] = pktSeqNo
             time.sleep(delay)
             sock.sendto(pktEncoder(pktSeqNo,message), addr)
