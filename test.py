@@ -1,8 +1,6 @@
-import random
+import time
 
-a = []
+now = lambda: int(round(time.time() * 1000))
+print(now())
 
-for i in range(10000) :
-    a.append(random.random() * 2)
-
-print(min(a), max(a))
+print(now())
