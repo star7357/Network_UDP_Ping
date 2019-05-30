@@ -11,7 +11,7 @@ import signal, sys
 DELIMITER = '\n'
 dict_recvPkts = dict()
 
-serverIP = '127.0.0.1'
+serverIP = 'nsl2.cau.ac.kr'
 serverPort = 34367
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
