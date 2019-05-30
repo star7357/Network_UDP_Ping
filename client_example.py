@@ -1,4 +1,7 @@
-# client_skel.py
+#
+# UDPPingClient.py
+# StudentID : 20144367 Name : Lee,Donghyun
+#
 import socket
 import random
 import signal, sys
@@ -7,7 +10,7 @@ import time
 
 DELIMITER = '\n'
 
-serverIP = 'nsl2.cau.ac.kr'
+serverIP = '127.0.0.1'
 serverPort = 34367
 
 timeoutInterval = 1000
