@@ -34,7 +34,7 @@ def pktProcessing(data, addr) :
     if addr not in dict_recvPkts :
         print("Packet has been received from <%s:%s> initially." % (clientIP, clientPort))
         dict_recvPkts[(clientIP, clientPort)] = pktSeqNo
-        print("dic_recevPkt[(%s,%s)] is updated to %d" % (clientIP, clientPort, pktSeqNo))
+        print("dic_recevPkt[(%s,%s)] is updated to %d" % (clientIP, str(clientPort), pktSeqNo))
         time.sleep(delay)
         sock.sendto(pktEncoder(pktSeqNo,message),addr)
         print("Pkt (%d,%s) sent successfully to <%s,%s>\n" % (pktSeqNo,message,clientIP,clientPort))
