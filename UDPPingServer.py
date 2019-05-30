@@ -11,11 +11,19 @@ import signal, sys
 DELIMITER = '\n'
 dict_recvPkts = dict()
 
-serverIP = 'nsl2.cau.ac.kr'
+serverIP = '127.0.0.1'
 serverPort = 34367
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((serverIP, serverPort))
+
+# Signal handler for input'Ctrl + C'
+def signal_handler(signal, frame): 
+    print('Bye bye~')
+    sock.close()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 def pktDecoder(data) :
     rawData = data.decode('utf-8')
