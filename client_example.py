@@ -4,8 +4,8 @@ import random
 
 DELIMITER = '\n'
 
-server_ip = 'nsl2.cau.ac.kr'
-server_port = 34367
+serverIP = 'nsl2.cau.ac.kr'
+serverPort = 34367
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.settimeout(1)
@@ -22,10 +22,10 @@ message = "Ping"
 
 for i in range(10) :
     try :
-#       pktSeqNo = random.randrange(0, 9)
-        pktSeqNo = i
+        pktSeqNo = random.randrange(0, 9)
+#       pktSeqNo = i
 
-        sock.sendto(pktEncoder(pktSeqNo,message), (server_ip, server_port))
+        sock.sendto(pktEncoder(pktSeqNo,message), (serverIP, serverPort))
         #print ("Client: send \"" + message + "\", pktNo : " + str(pktSeqNo))
 
         data, addr = sock.recvfrom(1024)
