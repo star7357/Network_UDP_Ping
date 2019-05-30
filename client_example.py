@@ -51,6 +51,7 @@ for i in range(10) :
                 endTime = now()
                 RTT = endTime - startTime
                 print("Packet (%s,%s) has been received successfully. RTT : %dms" % (recvPktSeqNo, recvMessage, RTT))
+                break
             else :
                 continue
 
