@@ -45,7 +45,7 @@ def pktProcessing(data, addr) :
             print("The packet received is out-of-order.\n")
             return 
         else : # The packet from (IP,Port) has been received before, and the packet is in order
-            print("The packet from <%s:%s> has been received before, and the packet with pktSeqno = %d is in order." % (str(clientIP), str(clientPort), pktSeqNo))
+            print("The packet from <%s:%s> has been received before, and the packet with pktSeqno = %s is in order." % (str(clientIP), str(clientPort), pktSeqNo))
             dict_recvPkts[(clientIP,clientPort)] = pktSeqNo
             time.sleep(delay)
             sock.sendto(pktEncoder(pktSeqNo,message), addr)
