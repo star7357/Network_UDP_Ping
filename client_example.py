@@ -44,7 +44,6 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
 for i in range(10) :
-    sock.settimeout(timeoutInterval / 1000)
     try :
         pktSeqNo = str(i)
 
@@ -74,8 +73,8 @@ for i in range(10) :
                 break
             else : # Not expected packet received. Ignore the packet by substracting the elapsed time from default timeoutInterval and wait next packet
                 elapsedTime = now() - startTime
-                remainTime = timeoutInterval - elapsedTime
-                sock.settimeout(remainTime / 1000)
+                remainTime = (timeoutInterval - elapsedTime) / 1000
+                sock.settimeout(remainTime)
                 continue
 
     except socket.timeout :
