@@ -6,6 +6,7 @@ from _thread import *
 import signal, sys
 
 DELIMITER = '\n'
+dict_recvPkts = dict()
 
 server_ip = 'nsl2.cau.ac.kr'
 server_port = 34367
@@ -23,7 +24,6 @@ def pktEncoder(pktSeqNo, message) :
     return pkt.encode('utf-8')
 
 def pktProcessing(data, addr) :
-    dict_recvPkts = dict()
     clientIP, clientPort = addr
     pktSeqNo, message = pktDecoder(data)
     delay = 2 * random.random()
