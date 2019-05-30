@@ -78,7 +78,7 @@ for i in range(10) :
                 continue
 
     except socket.timeout :
-        print("Time out!!!!")
+        print("Time out!!!! %dms elpased!!!" % (now() - startTime))
         lostPing += 1
         lostRatio = lostPing / sentPing
 
